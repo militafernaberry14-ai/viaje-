@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Viaje 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --navy:#1e3a5f;
+  --blue:#3270a0;
+  --blue2:#5a90be;
+  --blue3:#b8d8ee;
+  --blue4:#e4f2fa;
+  --blue5:#f0f7fc;
+  --rose:#d4837a;
+  --rose2:#e8b0aa;
+  --rose3:#f5dbd8;
+  --rose4:#fdf0ee;
+  --peach:#e8956a;
+  --peach2:#f0b898;
+  --peach3:#fae8d8;
+  --cream:#fdf8f2;
+  --cream2:#f5ede0;
+  --cream3:#ecddd0;
+  --sage:#6a9e72;
+  --sage2:#a0c4a5;
+  --sage3:#ddeede;
+  --ink:#1a2e3a;
+  --ink2:#4a6070;
+  --ink3:#8aa0b0;
+  --white:#ffffff;
+  --nav-h:68px;
+  --shadow:0 2px 20px rgba(26,46,58,0.09);
+  --shadow-sm:0 1px 8px rgba(26,46,58,0.06);
+  --r:18px;--r-sm:11px;
+}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Nunito',sans-serif;color:var(--ink);font-size:14px;
+  display:flex;flex-direction:column;
+  background-color:var(--cream);
+  background-image:
+    repeating-linear-gradient(0deg,
+      transparent 0px, transparent 36px,
+      rgba(180,210,235,0.18) 36px, rgba(180,210,235,0.18) 40px,
+      transparent 40px, transparent 76px,
+      rgba(232,160,154,0.10) 76px, rgba(232,160,154,0.10) 78px
+    );
+}
+
+/* ── PAGES ── */
+.page{display:none;flex:1;overflow-y:auto;padding-bottom:calc(var(--nav-h) + 12px)}
+.page.active{display:block}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:var(--white);
+  border-top:1px solid var(--blue3);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:100;box-shadow:0 -2px 16px rgba(26,46,58,0.07);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:8px 10px;border-radius:12px;
+  transition:all .18s;flex:1;border:none;background:transparent;
+}
+.nav-icon{font-size:19px;line-height:1;transition:transform .18s}
+.nav-label{font-size:0.58rem;font-weight:800;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink3);transition:color .18s}
+.nav-item.active .nav-icon{transform:translateY(-2px)}
+.nav-item.active .nav-label{color:var(--blue)}
+.nav-center{
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--peach));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(212,131,122,0.4);
+  font-size:24px;cursor:pointer;border:none;color:white;font-weight:900;
+  transition:transform .15s;margin-bottom:8px;flex-shrink:0;
+}
+.nav-center:active{transform:scale(0.92)}
+
+/* ── VICHY STRIPE ── */
+.vichy{
+  height:10px;
+  background:repeating-linear-gradient(90deg,
+    var(--rose3) 0,var(--rose3) 8px,
+    var(--white) 8px,var(--white) 16px
+  );
+  opacity:.7;
+  margin:14px 0;
+  border-radius:5px;
+}
+.vichy.blue{
+  background:repeating-linear-gradient(90deg,
+    var(--blue3) 0,var(--blue3) 8px,
+    var(--white) 8px,var(--white) 16px
+  );
+  opacity:.8;
+}
+.vichy.thin{height:5px;margin:10px 0;border-radius:3px}
+
+/* ── HEADER STRIPE ── */
+.header-stripe{
+  height:5px;
+  background:repeating-linear-gradient(90deg,
+    var(--rose2) 0,var(--rose2) 10px,
+    var(--blue2) 10px,var(--blue2) 20px,
+    var(--peach2) 20px,var(--peach2) 30px,
+    var(--white) 30px,var(--white) 40px
+  );
+  opacity:.6;
+}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  background:var(--navy);
+  padding:1.1rem 1.25rem .8rem;
+  position:sticky;top:0;z-index:50;
+}
+.page-header h1{font-size:1.1rem;font-weight:900;color:white;letter-spacing:-0.01em}
+.page-header p{font-size:0.6rem;color:rgba(255,255,255,0.48);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px}
+
+/* ── PAD ── */
+.pad{padding:1.25rem}
+
+/* ── CARDS ── */
+.card{
+  background:var(--white);border-radius:var(--r);
+  border:1px solid rgba(180,210,235,0.5);
+  padding:1.1rem 1.25rem;margin-bottom:10px;
+  box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:repeating-linear-gradient(90deg,
+    var(--blue3) 0,var(--blue3) 8px,
+    var(--rose3) 8px,var(--rose3) 16px,
+    var(--peach3) 16px,var(--peach3) 24px,
+    var(--cream2) 24px,var(--cream2) 32px
+  );
+  opacity:.8;
+}
+.card-label{
+  font-size:0.6rem;font-weight:800;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:12px;
+  margin-top:2px;
+}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(150deg,var(--navy) 0%,var(--blue) 100%);
+  padding:1.4rem 1.25rem 2.8rem;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:repeating-linear-gradient(90deg,
+    var(--rose2) 0,var(--rose2) 10px,
+    var(--peach2) 10px,var(--peach2) 20px,
+    rgba(255,255,255,0.4) 20px,rgba(255,255,255,0.4) 30px
+  );
+}
+.hero::after{
+  content:'';position:absolute;bottom:-28px;left:0;right:0;height:56px;
+  background:var(--cream);border-radius:50% 50% 0 0/56px 56px 0 0;
+}
+.hero-label{font-size:0.6rem;color:rgba(255,255,255,0.52);text-transform:uppercase;letter-spacing:0.1em;font-weight:700}
+.hero-title{font-size:1.5rem;font-weight:900;color:white;margin-top:2px;letter-spacing:-0.01em}
+.hero-sub{font-size:0.68rem;color:rgba(255,255,255,0.48);margin-top:3px}
+.hero-bal-label{font-size:0.58rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-top:1.2rem;font-weight:700}
+.hero-bal{font-size:1.85rem;font-weight:900;color:white;margin-top:2px;letter-spacing:-0.02em}
+
+/* ── STATS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.stat-grid.two{grid-template-columns:1fr 1fr}
+.stat{
+  background:var(--white);border-radius:var(--r-sm);
+  padding:11px 10px;border:1px solid rgba(180,210,235,0.5);
+  box-shadow:var(--shadow-sm);text-align:center;
+  position:relative;overflow:hidden;
+}
+.stat::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2.5px;
+  background:repeating-linear-gradient(90deg,
+    var(--rose3) 0,var(--rose3) 5px,var(--blue3) 5px,var(--blue3) 10px
+  );
+}
+.stat-label{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3)}
+.stat-val{font-size:1.15rem;font-weight:900;color:var(--ink);margin-top:2px}
+.stat-val.ok{color:var(--sage)}
+.stat-val.warn{color:var(--peach)}
+.stat-val.danger{color:var(--rose)}
+
+/* ── BAL BOX ── */
+.bal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.bal-box{
+  background:var(--white);border-radius:var(--r-sm);
+  padding:12px 14px;border:1px solid rgba(180,210,235,0.5);
+  box-shadow:var(--shadow-sm);
+}
+.bal-label{font-size:0.58rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3)}
+.bal-val{font-size:1.2rem;font-weight:900;color:var(--ink);margin-top:3px}
+.bal-val.ok{color:var(--sage)}
+.bal-val.warn{color:var(--peach)}
+.bal-val.danger{color:var(--rose)}
+
+/* ── PROGRESS ── */
+.prog-track{height:5px;background:var(--cream2);border-radius:3px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue2),var(--rose2));transition:width .5s}
+.prog-fill.warn{background:linear-gradient(90deg,var(--peach2),var(--rose))}
+.prog-fill.danger{background:var(--rose)}
+
+/* ── PRÓXIMOS ── */
+.prox-card{
+  background:var(--white);border-radius:var(--r);
+  border:1px solid rgba(180,210,235,0.5);
+  box-shadow:var(--shadow-sm);overflow:hidden;margin-bottom:10px;
+  position:relative;
+}
+.prox-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--blue3) 0,var(--blue3) 8px,var(--rose3) 8px,var(--rose3) 16px,var(--peach3) 16px,var(--peach3) 24px,var(--cream2) 24px,var(--cream2) 32px);opacity:.8}
+.prox-header{background:linear-gradient(90deg,var(--navy),var(--blue));padding:9px 14px;display:flex;justify-content:space-between;align-items:center;margin-top:3px}
+.prox-header span{font-size:0.6rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65)}
+.prox-header strong{font-size:0.78rem;font-weight:900;color:white}
+.prox-item{display:flex;gap:12px;padding:10px 14px;border-bottom:1px solid rgba(180,210,235,0.3);align-items:center}
+.prox-item:last-child{border-bottom:none}
+.prox-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.prox-info{flex:1}
+.prox-place{font-size:0.84rem;font-weight:800;color:var(--ink)}
+.prox-det{font-size:0.63rem;color:var(--ink3);margin-top:1px;font-weight:600}
+.prox-time{font-size:0.7rem;font-weight:900;color:var(--blue);text-align:right;flex-shrink:0}
+
+/* ── FLUJO HERO ── */
+.flujo-hero{
+  background:linear-gradient(150deg,var(--navy),var(--blue));
+  padding:1.4rem 1.25rem 1.6rem;
+  position:relative;
+}
+.flujo-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--rose2) 0,var(--rose2) 10px,var(--peach2) 10px,var(--peach2) 20px,rgba(255,255,255,0.4) 20px,rgba(255,255,255,0.4) 30px)}
+.flujo-label{font-size:0.58rem;color:rgba(255,255,255,0.52);text-transform:uppercase;letter-spacing:0.1em;font-weight:700}
+.flujo-val{font-size:2rem;font-weight:900;color:white;margin-top:4px;letter-spacing:-0.02em}
+.flujo-sub{font-size:0.68rem;color:rgba(255,255,255,0.48);margin-top:4px}
+.saldo-edit{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.1);border-radius:10px;
+  padding:8px 12px;margin-top:8px;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.saldo-edit label{font-size:0.62rem;color:rgba(255,255,255,0.62);font-weight:800;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap}
+.saldo-edit input{background:transparent;border:none;color:white;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;width:100%;outline:none}
+.saldo-edit input::placeholder{color:rgba(255,255,255,0.35)}
+
+.curr-tabs{display:flex;gap:6px;margin-bottom:12px}
+.curr-tab{flex:1;padding:8px;border-radius:var(--r-sm);border:1.5px solid rgba(180,210,235,0.6);background:var(--white);font-family:'Nunito',sans-serif;font-size:0.72rem;font-weight:800;color:var(--ink3);cursor:pointer;transition:all .15s;text-align:center}
+.curr-tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+
+/* ── MOV ROW ── */
+.mov-row{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(180,210,235,0.3)}
+.mov-row:last-child{border-bottom:none}
+.mov-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:1px solid rgba(180,210,235,0.3)}
+.mov-info{flex:1;min-width:0}
+.mov-name{font-size:0.84rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mov-meta{font-size:0.62rem;color:var(--ink3);margin-top:1px;font-weight:600}
+.mov-amount{font-size:0.9rem;font-weight:900;flex-shrink:0}
+.mov-amount.neg{color:var(--rose)}
+.mov-amount.pos{color:var(--sage)}
+.mov-amount.neutral{color:var(--ink2)}
+
+/* ── FAB ── */
+.fab{
+  position:fixed;bottom:calc(var(--nav-h) + 14px);right:14px;
+  width:50px;height:50px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--peach));
+  border:none;color:white;font-size:22px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(212,131,122,0.4);
+  display:flex;align-items:center;justify-content:center;
+  z-index:60;transition:transform .15s;font-weight:900;
+}
+.fab:active{transform:scale(0.92)}
+.fab.hidden{display:none}
+
+/* ── CAT GRID ── */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.cat-btn{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:8px 4px;border-radius:var(--r-sm);
+  border:1.5px solid rgba(180,210,235,0.5);
+  background:var(--white);cursor:pointer;transition:all .15s;font-family:'Nunito',sans-serif;
+}
+.cat-btn.sel{border-color:var(--blue);background:var(--blue4)}
+.cat-btn-ico{font-size:18px}
+.cat-btn-lbl{font-size:0.53rem;font-weight:800;color:var(--ink3);text-align:center;line-height:1.2}
+.cat-btn.sel .cat-btn-lbl{color:var(--blue)}
+
+/* ── MODAL ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(10,20,30,0.65);backdrop-filter:blur(4px);
+  align-items:flex-end;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--white);border-radius:22px 22px 0 0;
+  width:100%;padding:1.4rem 1.25rem;
+  padding-bottom:calc(1.4rem + env(safe-area-inset-bottom));
+  max-height:90vh;overflow-y:auto;
+  position:relative;overflow-x:hidden;
+}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--rose3) 0,var(--rose3) 8px,var(--blue3) 8px,var(--blue3) 16px,var(--peach3) 16px,var(--peach3) 24px,var(--cream2) 24px,var(--cream2) 32px);opacity:.9}
+.modal-handle{width:36px;height:4px;background:var(--cream3);border-radius:2px;margin:0 auto 1.2rem}
+.modal-title{font-size:1rem;font-weight:900;color:var(--ink);margin-bottom:1.1rem}
+
+/* ── PDF VIEWER ── */
+.pdf-overlay{
+  display:none;position:fixed;inset:0;z-index:300;
+  background:rgba(10,20,30,0.96);flex-direction:column;
+}
+.pdf-overlay.open{display:flex}
+.pdf-bar{
+  background:var(--navy);padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  position:relative;
+}
+.pdf-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--rose3) 0,var(--rose3) 8px,var(--blue3) 8px,var(--blue3) 16px,var(--peach3) 16px,var(--peach3) 24px,var(--cream2) 24px,var(--cream2) 32px);opacity:.7}
+.pdf-title{font-size:0.84rem;font-weight:800;color:white;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:calc(100% - 90px)}
+.pdf-close{background:rgba(255,255,255,0.14);border:none;color:white;padding:6px 14px;border-radius:20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.72rem;cursor:pointer}
+.pdf-body{flex:1;overflow:auto;display:flex;flex-direction:column}
+.pdf-body iframe{flex:1;border:none;width:100%;min-height:calc(100vh - 60px)}
+.pdf-body img{max-width:100%;display:block;margin:0 auto;padding:8px}
+
+/* ── FORM ── */
+.field{margin-bottom:11px}
+.field label{font-size:0.6rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:5px}
+.field input,.field select,.field textarea{
+  width:100%;font-size:0.88rem;font-family:'Nunito',sans-serif;font-weight:700;
+  border:1.5px solid rgba(180,210,235,0.7);border-radius:var(--r-sm);
+  padding:9px 11px;background:var(--blue5);color:var(--ink);transition:border-color .15s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue2);background:var(--white)}
+.field textarea{min-height:52px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-primary{
+  width:100%;padding:12px;border-radius:var(--r-sm);border:none;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:white;font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:900;
+  cursor:pointer;transition:opacity .15s;margin-top:6px;
+}
+.btn-primary:active{opacity:0.88}
+.btn-ghost{background:transparent;border:1.5px solid rgba(180,210,235,0.7);color:var(--ink3);font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:800;padding:8px 16px;border-radius:20px;cursor:pointer}
+
+/* ── DOCS ── */
+.search-box{display:flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid rgba(180,210,235,0.7);border-radius:30px;padding:9px 14px;margin-bottom:10px}
+.search-box input{border:none;background:transparent;font-family:'Nunito',sans-serif;font-size:0.84rem;font-weight:600;color:var(--ink);flex:1;outline:none}
+.search-box input::placeholder{color:var(--ink3)}
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.fchip{padding:5px 12px;border-radius:20px;font-size:0.64rem;font-weight:800;border:1.5px solid rgba(180,210,235,0.7);background:var(--white);color:var(--ink3);cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;white-space:nowrap}
+.fchip.on{background:var(--navy);color:white;border-color:var(--navy)}
+
+.doc-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(180,210,235,0.3)}
+.doc-item:last-child{border-bottom:none}
+.doc-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;border:1px solid rgba(180,210,235,0.4)}
+.doc-info{flex:1;min-width:0}
+.doc-name{font-size:0.84rem;font-weight:800;color:var(--ink)}
+.doc-meta{font-size:0.62rem;color:var(--ink3);margin-top:2px;font-weight:600}
+.doc-btns{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.doc-action{padding:4px 11px;border-radius:16px;font-size:0.62rem;font-weight:800;border:1.5px solid rgba(180,210,235,0.7);background:var(--cream2);color:var(--ink2);cursor:pointer;font-family:'Nunito',sans-serif;transition:all .12s}
+.doc-action.primary{background:var(--blue4);border-color:rgba(50,112,160,0.2);color:var(--blue)}
+
+.file-drop{border:1.5px dashed rgba(180,210,235,0.8);border-radius:var(--r-sm);padding:16px;text-align:center;cursor:pointer;color:var(--ink3);font-size:0.76rem;font-weight:700;transition:all .18s;background:var(--blue5);position:relative;line-height:1.5}
+.file-drop:hover,.file-drop.drag{border-color:var(--blue2);background:var(--blue4);color:var(--blue)}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.file-ok{font-size:0.7rem;color:var(--sage);margin-top:4px;font-weight:800}
+.file-warn{font-size:0.63rem;color:var(--rose);margin-top:4px;font-weight:700}
+
+/* ── ITINERARIO ── */
+.itin-day{margin-bottom:5px}
+.itin-date-hdr{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.itin-badge{background:var(--navy);color:white;font-size:0.6rem;font-weight:900;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;white-space:nowrap}
+.itin-line{flex:1;height:1px;background:rgba(180,210,235,0.5)}
+.itin-card{background:var(--white);border-radius:var(--r-sm);border:1px solid rgba(180,210,235,0.45);padding:9px 12px;display:flex;gap:10px;align-items:flex-start;margin-bottom:3px;box-shadow:var(--shadow-sm)}
+.itin-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.itin-dot.flight{background:var(--blue);box-shadow:0 0 0 2px rgba(50,112,160,0.2)}
+.itin-dot.boat{background:var(--sage);box-shadow:0 0 0 2px rgba(106,158,114,0.2)}
+.itin-dot.stay{background:var(--rose2);box-shadow:0 0 0 2px rgba(212,131,122,0.2)}
+.itin-body{flex:1}
+.itin-place{font-size:0.87rem;font-weight:800;color:var(--ink)}
+.itin-det{font-size:0.68rem;color:var(--ink2);margin-top:2px;font-weight:600}
+.itin-quien{font-size:0.62rem;color:var(--blue);margin-top:3px;font-weight:700}
+.itin-time{font-size:0.7rem;font-weight:900;color:var(--navy);flex-shrink:0;text-align:right}
+
+/* ── PREVIOS ── */
+.previos-hero{
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  border-radius:var(--r);padding:14px 16px;margin-bottom:12px;
+  position:relative;overflow:hidden;
+}
+.previos-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:repeating-linear-gradient(90deg,var(--rose2) 0,var(--rose2) 8px,var(--peach2) 8px,var(--peach2) 16px,rgba(255,255,255,.3) 16px,rgba(255,255,255,.3) 24px)}
+.previos-hero-row{display:flex;justify-content:space-between;align-items:flex-end}
+.previos-label{font-size:0.6rem;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.08em;font-weight:700}
+.previos-val{font-size:1.3rem;font-weight:900;color:white;margin-top:2px}
+
+/* ── MISC ── */
+.btn-add-row{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;margin-bottom:10px;border:1.5px dashed rgba(180,210,235,0.7);border-radius:var(--r-sm);background:transparent;color:var(--ink3);font-size:0.78rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .18s}
+.btn-add-row:hover{background:var(--blue4);border-color:var(--blue3);color:var(--blue)}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--ink3);font-size:16px;padding:4px;transition:color .1s;line-height:1;flex-shrink:0}
+.del-btn:hover{color:var(--rose)}
+.empty{text-align:center;padding:2rem 1rem;color:var(--ink3);font-size:0.85rem;font-weight:700}
+.sec-title{font-size:0.6rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+
+@media(max-width:380px){
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .bal-grid{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .stat-grid .stat:last-child{grid-column:span 2}
+}
+</style>
+</head>
+<body>
+
+<!-- ── PAGE: INICIO ── -->
+<div id="page-inicio" class="page active">
+  <div class="hero">
+    <div class="hero-label">Buen viaje</div>
+    <div class="hero-title">Mi viaje ✈︎ 2026</div>
+    <div class="hero-sub">8 jun — 24 jun · MVD → Europa</div>
+    <div class="hero-bal-label">Saldo disponible</div>
+    <div class="hero-bal">
+      <span id="i-usd-rest">$—</span>
+      <span style="font-size:.9rem;opacity:.4;margin:0 6px">/</span>
+      <span id="i-eur-rest">€—</span>
+    </div>
+  </div>
+  <div class="pad" style="margin-top:-4px">
+    <div class="bal-grid">
+      <div class="bal-box">
+        <div class="bal-label">Gastado USD</div>
+        <div class="bal-val" id="i-usd-gast">$0</div>
+        <div class="prog-track"><div class="prog-fill" id="i-prog-usd" style="width:0%"></div></div>
+      </div>
+      <div class="bal-box">
+        <div class="bal-label">Gastado EUR</div>
+        <div class="bal-val" id="i-eur-gast">€0</div>
+        <div class="prog-track"><div class="prog-fill" id="i-prog-eur" style="width:0%;background:linear-gradient(90deg,var(--sage2),var(--blue2))"></div></div>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-label">Gastos</div><div class="stat-val" id="i-count">0</div></div>
+      <div class="stat"><div class="stat-label">Días</div><div class="stat-val" id="i-dias">—</div></div>
+      <div class="stat"><div class="stat-label">Próximo</div><div class="stat-val" id="i-prox" style="font-size:.68rem">—</div></div>
+    </div>
+    <div class="vichy thin"></div>
+    <div class="sec-title">Próximos vuelos y traslados</div>
+    <div id="i-proximos"></div>
+    <div class="vichy thin blue"></div>
+    <div class="sec-title">Itinerario completo</div>
+    <div style="display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>Vuelo</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block"></span>Barco/Ferry</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose2);display:inline-block"></span>Estadía</span>
+    </div>
+    <div id="inicio-itin-list"></div>
+  </div>
+</div>
+
+<!-- ── PAGE: FLUJO ── -->
+<div id="page-flujo" class="page">
+  <div class="flujo-hero">
+    <div class="flujo-label">Saldo del viaje</div>
+    <div class="flujo-val" id="f-display">—</div>
+    <div class="flujo-sub" id="f-sub">Configurá tu saldo inicial</div>
+    <div class="saldo-edit">
+      <label>USD $</label>
+      <input type="number" id="f-usd" placeholder="0" oninput="renderFlujo()">
+    </div>
+    <div class="saldo-edit" style="margin-top:6px">
+      <label>EUR €</label>
+      <input type="number" id="f-eur" placeholder="0" oninput="renderFlujo()">
+    </div>
+  </div>
+  <div class="pad">
+    <div class="curr-tabs">
+      <button class="curr-tab active" onclick="setCurrTab('usd',this)">USD $</button>
+      <button class="curr-tab" onclick="setCurrTab('eur',this)">EUR €</button>
+    </div>
+    <div class="bal-grid">
+      <div class="bal-box">
+        <div class="bal-label" id="f-rest-label">USD restante</div>
+        <div class="bal-val ok" id="f-rest">—</div>
+      </div>
+      <div class="bal-box">
+        <div class="bal-label" id="f-gast-label">USD gastado</div>
+        <div class="bal-val" id="f-gast">—</div>
+      </div>
+    </div>
+    <div class="card" style="padding:10px 14px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+        <span style="font-size:.6rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.08em">Consumido</span>
+        <span style="font-size:.65rem;font-weight:900;color:var(--ink3)" id="f-pct">0%</span>
+      </div>
+      <div class="prog-track" style="height:7px"><div class="prog-fill" id="f-bar" style="width:0%"></div></div>
+    </div>
+    <div class="vichy thin blue"></div>
+    <div class="sec-title">Movimientos</div>
+    <div class="card"><div id="f-movs"></div></div>
+  </div>
+</div>
+
+<!-- ── PAGE: GASTOS ── -->
+<div id="page-gastos" class="page">
+  <div class="page-header"><div class="header-stripe"></div><h1>Gastos del viaje</h1><p>Registrá cada gasto</p></div>
+  <div class="pad">
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-label">USD</div><div class="stat-val" id="g-usd" style="font-size:.9rem">$0</div></div>
+      <div class="stat"><div class="stat-label">EUR</div><div class="stat-val" id="g-eur" style="font-size:.9rem">€0</div></div>
+      <div class="stat"><div class="stat-label">Items</div><div class="stat-val" id="g-cnt">0</div></div>
+    </div>
+    <div class="vichy thin"></div>
+    <div class="card" id="g-card" style="display:none"><div id="g-list"></div></div>
+    <div class="empty" id="g-empty">Todavía no hay gastos ✈︎<br><span style="font-size:.72rem">Tocá + para agregar</span></div>
+  </div>
+  <button class="fab" id="fab" onclick="openModal('m-gasto')">+</button>
+</div>
+
+<!-- ── PAGE: PREVIOS ── -->
+<div id="page-previos" class="page">
+  <div class="page-header"><div class="header-stripe"></div><h1>Gastos previos</h1><p>Pagos antes del viaje · no afectan el flujo</p></div>
+  <div class="pad">
+    <div class="previos-hero">
+      <div class="previos-hero-row">
+        <div><div class="previos-label">Total USD</div><div class="previos-val" id="p-usd">$0</div></div>
+        <div style="text-align:right"><div class="previos-label">Total EUR</div><div class="previos-val" id="p-eur">€0</div></div>
+      </div>
+    </div>
+    <button class="btn-add-row" onclick="openModal('m-previo')">+ Agregar gasto previo</button>
+    <div class="card" id="p-card" style="display:none"><div id="p-list"></div></div>
+    <div class="empty" id="p-empty">No hay gastos previos.</div>
+  </div>
+</div>
+
+<!-- ── PAGE: DOCS ── -->
+<div id="page-docs" class="page">
+  <div class="page-header"><div class="header-stripe"></div><h1>Documentos</h1><p>Tus archivos del viaje</p></div>
+  <div class="pad">
+    <div class="search-box">
+      <span style="font-size:13px;opacity:.38">🔍</span>
+      <input type="text" id="d-search" placeholder="Buscar..." oninput="filterDocs()">
+      <button id="d-clear" onclick="clearSearch()" style="display:none;background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink3)">×</button>
+    </div>
+    <div class="filter-row" id="f-chips">
+      <button class="fchip on" data-f="todos" onclick="setFilter('todos',this)">Todos</button>
+      <button class="fchip" data-f="pasaje" onclick="setFilter('pasaje',this)">Pasajes</button>
+      <button class="fchip" data-f="reserva" onclick="setFilter('reserva',this)">Reservas</button>
+      <button class="fchip" data-f="pasaporte" onclick="setFilter('pasaporte',this)">Pasaporte</button>
+      <button class="fchip" data-f="seguro" onclick="setFilter('seguro',this)">Seguro</button>
+      <button class="fchip" data-f="ticket" onclick="setFilter('ticket',this)">Tickets</button>
+      <button class="fchip" data-f="conarchivo" onclick="setFilter('conarchivo',this)">Con archivo</button>
+    </div>
+    <div style="font-size:.6rem;color:var(--ink3);font-weight:800;margin-bottom:8px" id="d-count"></div>
+    <div class="vichy thin blue"></div>
+    <button class="btn-add-row" onclick="openModal('m-doc')">+ Agregar documento</button>
+    <div class="card" id="d-card" style="display:none"><div id="d-list"></div></div>
+    <div class="empty" id="d-empty">No hay documentos guardados.</div>
+  </div>
+</div>
+
+<!-- ── PAGE: ITINERARIO ── -->
+<div id="page-itin" class="page">
+  <div class="page-header"><div class="header-stripe"></div><h1>Itinerario</h1><p>8 jun — 24 jun · 17 días</p></div>
+  <div class="pad">
+    <div style="display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>Vuelo</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block"></span>Barco/Ferry</span>
+      <span style="display:flex;align-items:center;gap:4px;font-size:.58rem;color:var(--ink3);font-weight:800;text-transform:uppercase;letter-spacing:.07em"><span style="width:8px;height:8px;border-radius:50%;background:var(--rose2);display:inline-block"></span>Estadía</span>
+    </div>
+    <div class="vichy thin"></div>
+    <div id="itin-list"></div>
+  </div>
+</div>
+
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <button class="nav-item active" onclick="goTo('inicio',this)"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></button>
+  <button class="nav-item" onclick="goTo('flujo',this)"><span class="nav-icon">💰</span><span class="nav-label">Flujo</span></button>
+  <button class="nav-center" onclick="goTo('gastos',document.querySelectorAll('.nav-item')[1])">+</button>
+  <button class="nav-item" onclick="goTo('previos',this)"><span class="nav-icon">🧾</span><span class="nav-label">Previos</span></button>
+  <button class="nav-item" onclick="goTo('docs',this)"><span class="nav-icon">📎</span><span class="nav-label">Docs</span></button>
+</nav>
+
+<!-- Botón itinerario separado en esquina -->
+<button onclick="goTo('itin',null)" style="position:fixed;top:8px;right:8px;z-index:60;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:white;font-family:'Nunito',sans-serif;font-size:.6rem;font-weight:800;padding:5px 10px;border-radius:15px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase" id="itin-btn">🗺 Viaje</button>
+
+<!-- ── MODALS ── -->
+<div class="modal-overlay" id="m-gasto">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Registrar gasto</div>
+    <div class="cat-grid" id="cat-grid"></div>
+    <div class="field"><label>Descripción</label><input id="g-desc" placeholder="¿En qué gastaste?"></div>
+    <div class="form-row">
+      <div class="field"><label>Monto</label><input id="g-monto" type="number" placeholder="0" step="0.01" min="0"></div>
+      <div class="field"><label>Moneda</label><select id="g-moneda"><option value="USD">USD $</option><option value="EUR">EUR €</option></select></div>
+    </div>
+    <div class="field"><label>Fecha</label><input id="g-fecha" type="date"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="closeModal('m-gasto')">Cancelar</button>
+      <button class="btn-primary" style="flex:1" onclick="addGasto()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="m-previo">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Gasto previo al viaje</div>
+    <div class="field"><label>Descripción</label><input id="p-desc" placeholder="Ej: Vuelo MVD-MAD"></div>
+    <div class="form-row">
+      <div class="field"><label>Monto</label><input id="p-monto" type="number" placeholder="0" step="0.01" min="0"></div>
+      <div class="field"><label>Moneda</label><select id="p-moneda"><option value="USD">USD $</option><option value="EUR">EUR €</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>Categoría</label>
+        <select id="p-cat">
+          <option value="vuelo">✈️ Vuelo</option><option value="alojamiento">🏨 Alojamiento</option>
+          <option value="seguro">🛡 Seguro</option><option value="visa">🪪 Visa</option>
+          <option value="equipaje">🧳 Equipaje</option><option value="otro">📌 Otro</option>
+        </select>
+      </div>
+      <div class="field"><label>¿Quién pagó?</label><input id="p-quien" placeholder="yo, Marta..."></div>
+    </div>
+    <div class="field"><label>Fecha</label><input id="p-fecha" type="date"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="closeModal('m-previo')">Cancelar</button>
+      <button class="btn-primary" style="flex:1" onclick="addPrevio()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="m-doc">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Agregar documento</div>
+    <div class="form-row">
+      <div class="field"><label>Nombre</label><input id="dd-nombre" placeholder="Ej: Pasaje MVD-MAD"></div>
+      <div class="field"><label>Tipo</label>
+        <select id="dd-tipo">
+          <option value="pasaje">✈️ Pasaje</option><option value="reserva">🏨 Reserva</option>
+          <option value="pasaporte">🪪 Pasaporte</option><option value="seguro">🛡 Seguro</option>
+          <option value="ticket">🎟 Ticket</option><option value="otro">📌 Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field"><label>¿Quién lo tiene?</label><input id="dd-quien" placeholder="Yo, en el mail..."></div>
+      <div class="field"><label>N° referencia</label><input id="dd-ref" placeholder="Confirmación..."></div>
+    </div>
+    <div class="field"><label>Notas</label><input id="dd-notas" placeholder="Imprimir, vence en..."></div>
+    <div class="field">
+      <label>Adjunto (PDF o imagen · máx 8MB)</label>
+      <div class="file-drop" id="drop-zone">
+        <input type="file" id="dd-archivo" accept=".pdf,image/*" onchange="handleFile(this)">
+        Tocá para adjuntar un archivo
+      </div>
+      <div class="file-ok" id="file-ok"></div>
+      <div class="file-warn" id="file-warn"></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-ghost" onclick="cancelDoc()">Cancelar</button>
+      <button class="btn-primary" style="flex:1" onclick="addDoc()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PDF Viewer -->
+<div class="pdf-overlay" id="pdf-overlay">
+  <div class="pdf-bar">
+    <div class="pdf-title" id="pdf-title">Documento</div>
+    <button class="pdf-close" onclick="closePdf()">✕ Cerrar</button>
+  </div>
+  <div class="pdf-body" id="pdf-body"></div>
+</div>
+
+<script>
+// ── STORAGE ──
+const K={g:'vj2_g',p:'vj2_p',d:'vj2_d',su:'vj2_su',se:'vj2_se'};
+function load(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+let gastos=load(K.g,[]);
+let previos=load(K.p,[
+  // ALOJAMIENTOS
+  {id:101,desc:'Alojamiento Dubrovnik',monto:82,moneda:'USD',cat:'alojamiento',fecha:'2026-06-09',quien:''},
+  {id:102,desc:'Alojamiento Hvar',monto:84.74,moneda:'USD',cat:'alojamiento',fecha:'2026-06-11',quien:''},
+  {id:103,desc:'Barco (alojamiento)',monto:556,moneda:'USD',cat:'alojamiento',fecha:'2026-06-17',quien:''},
+  {id:104,desc:'Alojamiento Ibiza',monto:60,moneda:'USD',cat:'alojamiento',fecha:'2026-06-21',quien:''},
+  {id:105,desc:'Alojamiento Madrid',monto:78,moneda:'USD',cat:'alojamiento',fecha:'2026-06-22',quien:''},
+  // PASAJES
+  {id:201,desc:'Pasaje MVD → Madrid (ida y vuelta)',monto:1050,moneda:'USD',cat:'vuelo',fecha:'2026-06-08',quien:''},
+  {id:202,desc:'Pasaje Madrid → Dubrovnik',monto:137.25,moneda:'USD',cat:'vuelo',fecha:'2026-06-09',quien:'Jose Iramendi'},
+  {id:203,desc:'Pasaje Dubrovnik → Hvar',monto:50.5,moneda:'USD',cat:'vuelo',fecha:'2026-06-11',quien:'Ele Litta'},
+  {id:204,desc:'Pasaje Hvar → Split',monto:50.5,moneda:'USD',cat:'vuelo',fecha:'2026-06-13',quien:'Ele Litta'},
+  {id:205,desc:'Pasaje Split → Mallorca',monto:260.06,moneda:'USD',cat:'vuelo',fecha:'2026-06-14',quien:'Jose Iramendi'},
+  {id:206,desc:'Pasaje Mallorca → Ibiza',monto:96.04,moneda:'USD',cat:'vuelo',fecha:'2026-06-17',quien:'Ele Litta'},
+  {id:207,desc:'Pasaje Ibiza → Madrid',monto:120.8,moneda:'USD',cat:'vuelo',fecha:'2026-06-22',quien:'Jose Iramendi'},
+  // EXTRAS
+  {id:301,desc:'Fiesta Hugel',monto:48.82,moneda:'USD',cat:'otro',fecha:'2026-06-18',quien:''},
+  {id:302,desc:'Pasaporte',monto:142,moneda:'USD',cat:'visa',fecha:'',quien:''},
+]);
+let docs=load(K.d,[
+  {id:1,nombre:'Vuelo MVD → Madrid (Iberia)',tipo:'pasaje',quien:'Yo (mail)',ref:'',notas:'8 jun · 21:45 → 14:35 (+1)',archivo:null},
+  {id:2,nombre:'Vuelo Madrid → Dubrovnik',tipo:'pasaje',quien:'Jose Iramendi',ref:'',notas:'9 jun · 17:00 → 23:25',archivo:null},
+  {id:3,nombre:'Pasaje Dubrovnik → Hvar',tipo:'pasaje',quien:'Ele Litta',ref:'',notas:'11 jun',archivo:null},
+  {id:4,nombre:'Barco Hvar → Split',tipo:'pasaje',quien:'Ele Litta',ref:'',notas:'13 jun · 20:05 → 21:05',archivo:null},
+  {id:5,nombre:'Vuelo Split → Mallorca',tipo:'pasaje',quien:'Jose Iramendi',ref:'',notas:'14 jun · 8:50 → 14:00',archivo:null},
+  {id:6,nombre:'Vuelo Mallorca → Ibiza',tipo:'pasaje',quien:'Ele Litta',ref:'',notas:'17 jun · 7:30 → 8:10',archivo:null},
+  {id:7,nombre:'Vuelo Ibiza → Madrid',tipo:'pasaje',quien:'Jose Iramendi',ref:'',notas:'22 jun · 7:40 → 9:00',archivo:null},
+]);
+
+const itin=[
+  {f:'8 jun',d:'Lun',l:'✈︎ Salida desde MVD',t:'flight',det:'MVD → Madrid · IBERIA · 21:45 → 14:35 (+1)',q:'Pasaje: yo (mail)',time:'21:45'},
+  {f:'9 jun',d:'Mar',l:'✈︎ Madrid → Dubrovnik',t:'flight',det:'17:00 → 23:25 · Escala Madrid',q:'Pasaje: Jose Iramendi',time:'17:00'},
+  {f:'10 jun',d:'Mié',l:'🇭🇷 Dubrovnik',t:'stay',det:'Día libre en Dubrovnik',q:'',time:''},
+  {f:'11 jun',d:'Jue',l:'⛴ Dubrovnik → Hvar',t:'boat',det:'Ferry · horario a confirmar',q:'Pasaje: Ele Litta',time:'—'},
+  {f:'12 jun',d:'Vie',l:'🏝 Hvar',t:'stay',det:'Día libre en Hvar',q:'',time:''},
+  {f:'13 jun',d:'Sáb',l:'⛴ Hvar → Split',t:'boat',det:'Ferry · 20:05 → 21:05',q:'Pasaje: Ele Litta',time:'20:05'},
+  {f:'14 jun',d:'Dom',l:'✈︎ Split → Mallorca',t:'flight',det:'8:50 → 14:00',q:'Pasaje: Jose Iramendi',time:'8:50'},
+  {f:'15 jun',d:'Lun',l:'🏖 Mallorca',t:'stay',det:'Día libre en Mallorca',q:'',time:''},
+  {f:'16 jun',d:'Mar',l:'🏖 Mallorca',t:'stay',det:'Día libre en Mallorca',q:'',time:''},
+  {f:'17 jun',d:'Mié',l:'⛵ Mallorca → Ibiza',t:'boat',det:'Barco · 7:30 → 8:10',q:'Pasaje: Ele Litta',time:'7:30'},
+  {f:'18 jun',d:'Jue',l:'⛵ En barco',t:'boat',det:'Navegando',q:'',time:''},
+  {f:'19 jun',d:'Vie',l:'⛵ En barco',t:'boat',det:'Navegando',q:'',time:''},
+  {f:'20 jun',d:'Sáb',l:'⛵ En barco',t:'boat',det:'Navegando',q:'',time:''},
+  {f:'21 jun',d:'Dom',l:'🏝 Ibiza',t:'stay',det:'Llegada a Ibiza',q:'',time:''},
+  {f:'22 jun',d:'Lun',l:'✈︎ Ibiza → Madrid',t:'flight',det:'7:40 → 9:00',q:'Pasaje: Jose Iramendi',time:'7:40'},
+  {f:'23 jun',d:'Mar',l:'🇪🇸 Madrid',t:'stay',det:'Día libre en Madrid',q:'',time:''},
+  {f:'24 jun',d:'Mié',l:'✈︎ Vuelta a casa',t:'flight',det:'Madrid → Uruguay · 11:40 → 19:35',q:'',time:'11:40'},
+];
+
+const CATS=[
+  {id:'comida',lbl:'Comida',ico:'🍽'},
+  {id:'bebida',lbl:'Bebida',ico:'🥂'},
+  {id:'transporte',lbl:'Transporte',ico:'🚇'},
+  {id:'alojamiento',lbl:'Alojamiento',ico:'🏨'},
+  {id:'actividad',lbl:'Actividad',ico:'🎟'},
+  {id:'compras',lbl:'Compras',ico:'🛍'},
+  {id:'ropa',lbl:'Ropa',ico:'👗'},
+  {id:'fiesta',lbl:'Fiesta',ico:'🎉'},
+  {id:'farmacia',lbl:'Farmacia',ico:'💊'},
+  {id:'otro',lbl:'Otro',ico:'📌'},
+];
+const catBg={comida:'#fef3d8',bebida:'#f3e8f8',transporte:'#e4f2fa',alojamiento:'#e4f2fa',actividad:'#ddeede',compras:'#fde8e6',ropa:'#fde8f0',fiesta:'#f3e8f8',farmacia:'#ddeede',otro:'#f0ede8'};
+const catMapa={vuelo:'✈️',alojamiento:'🏨',seguro:'🛡',visa:'🪪',equipaje:'🧳',otro:'📌'};
+const catMapaBg={vuelo:'#e4f2fa',alojamiento:'#e4f2fa',seguro:'#ddeede',visa:'#fde8e6',equipaje:'#ddeede',otro:'#f0ede8'};
+const docBg={pasaje:'#e4f2fa',reserva:'#ddeede',pasaporte:'#fde8e6',seguro:'#ddeede',ticket:'#fef3d8',otro:'#f0ede8'};
+const docIco={pasaje:'✈️',reserva:'🏨',pasaporte:'🪪',seguro:'🛡',ticket:'🎟',otro:'📌'};
+
+function fmtD(s){if(!s)return '—';const d=new Date(s+'T12:00');return d.toLocaleDateString('es-AR',{day:'2-digit',month:'short'});}
+function fmtN(n,sym){if(n===undefined||n===null)return sym+'0';return sym+(Math.abs(n)<10?n.toFixed(2):Math.round(n)).toLocaleString('es-AR');}
+function today(){return new Date().toISOString().split('T')[0];}
+
+// ── NAV ──
+function goTo(page,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  if(btn&&btn.classList)btn.classList.add('active');
+  document.getElementById('fab').classList.toggle('hidden',page!=='gastos');
+  document.getElementById('itin-btn').style.display=page==='itin'?'none':'block';
+  if(page==='inicio')renderInicio();
+  if(page==='flujo')renderFlujo();
+  if(page==='previos')renderPrevios();
+  if(page==='docs')renderDocs();
+  if(page==='itin')renderItin();
+}
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+
+// ── INICIO ──
+function renderInicio(){
+  const su=parseFloat(load(K.su,0))||0;
+  const se=parseFloat(load(K.se,0))||0;
+  const gU=gastos.filter(g=>g.moneda==='USD').reduce((s,x)=>s+x.monto,0);
+  const gE=gastos.filter(g=>g.moneda==='EUR').reduce((s,x)=>s+x.monto,0);
+  const rU=su-gU,rE=se-gE;
+  const pU=su>0?Math.min(100,Math.round(gU/su*100)):0;
+  const pE=se>0?Math.min(100,Math.round(gE/se*100)):0;
+  document.getElementById('i-usd-rest').textContent=fmtN(rU,'$');
+  document.getElementById('i-eur-rest').textContent=fmtN(rE,'€');
+  document.getElementById('i-usd-gast').textContent=fmtN(gU,'$');
+  document.getElementById('i-eur-gast').textContent=fmtN(gE,'€');
+  const bU=document.getElementById('i-prog-usd');
+  bU.style.width=pU+'%';bU.className='prog-fill'+(pU>85?' danger':pU>65?' warn':'');
+  const bE=document.getElementById('i-prog-eur');
+  bE.style.width=pE+'%';
+  if(pE>85)bE.style.background='var(--rose)';
+  else if(pE>65)bE.style.background='linear-gradient(90deg,var(--peach2),var(--rose2))';
+  else bE.style.background='linear-gradient(90deg,var(--sage2),var(--blue2))';
+  document.getElementById('i-count').textContent=gastos.length;
+  const hoy=new Date();
+  const salida=new Date('2026-06-08');
+  const diff=Math.ceil((salida-hoy)/(1000*60*60*24));
+  document.getElementById('i-dias').textContent=diff>0?diff+'d':'¡Ya!';
+  const proximos=itin.filter(d=>d.t==='flight'||d.t==='boat').slice(0,3);
+  document.getElementById('i-prox').textContent=proximos[0]?proximos[0].f:'—';
+  const el=document.getElementById('i-proximos');
+  if(!proximos.length){el.innerHTML='';return;}
+  el.innerHTML=`<div class="prox-card">
+    <div class="prox-header"><span>Próximos vuelos y traslados</span><strong>${proximos.length} eventos</strong></div>
+    ${proximos.map(d=>`<div class="prox-item">
+      <div class="prox-dot" style="background:${d.t==='flight'?'var(--blue)':'var(--sage)'}"></div>
+      <div class="prox-info"><div class="prox-place">${d.l}</div><div class="prox-det">${d.det}</div></div>
+      ${d.time?`<div class="prox-time">${d.f}<br>${d.time}</div>`:''}
+    </div>`).join('')}
+  </div>`;
+  // itinerario completo en inicio
+  document.getElementById('inicio-itin-list').innerHTML=itin.map(d=>`
+    <div class="itin-day">
+      <div class="itin-date-hdr">
+        <div class="itin-badge">${d.f} · ${d.d}</div>
+        <div class="itin-line"></div>
+      </div>
+      <div class="itin-card">
+        <div class="itin-dot ${d.t}"></div>
+        <div class="itin-body">
+          <div class="itin-place">${d.l}</div>
+          <div class="itin-det">${d.det}</div>
+          ${d.q?`<div class="itin-quien">🎫 ${d.q}</div>`:''}
+        </div>
+        ${d.time?`<div class="itin-time">${d.time}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+// ── FLUJO ──
+let currTab='usd';
+function setCurrTab(tab,btn){currTab=tab;document.querySelectorAll('.curr-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderFlujo();}
+function renderFlujo(){
+  const su=parseFloat(document.getElementById('f-usd').value)||0;
+  const se=parseFloat(document.getElementById('f-eur').value)||0;
+  save(K.su,su);save(K.se,se);
+  const gU=gastos.filter(g=>g.moneda==='USD').reduce((s,x)=>s+x.monto,0);
+  const gE=gastos.filter(g=>g.moneda==='EUR').reduce((s,x)=>s+x.monto,0);
+  const rU=su-gU,rE=se-gE;
+  const curr=currTab==='usd';
+  const r=curr?rU:rE,g=curr?gU:gE,s=curr?su:se,sym=curr?'$':'€';
+  const pct=s>0?Math.min(100,Math.round(g/s*100)):0;
+  document.getElementById('f-display').textContent=fmtN(r,sym);
+  document.getElementById('f-sub').textContent=`Gastado: ${fmtN(g,sym)} de ${fmtN(s,sym)}`;
+  document.getElementById('f-rest-label').textContent=(curr?'USD':'EUR')+' restante';
+  document.getElementById('f-gast-label').textContent=(curr?'USD':'EUR')+' gastado';
+  document.getElementById('f-rest').textContent=fmtN(r,sym);
+  document.getElementById('f-rest').className='bal-val '+(r<0?'danger':r<s*.2?'warn':'ok');
+  document.getElementById('f-gast').textContent=fmtN(g,sym);
+  document.getElementById('f-pct').textContent=pct+'%';
+  const bar=document.getElementById('f-bar');
+  bar.style.width=pct+'%';bar.className='prog-fill'+(pct>85?' danger':pct>65?' warn':'');
+  const movs=gastos.filter(x=>x.moneda===(curr?'USD':'EUR')).sort((a,b)=>(b.fecha||'')>(a.fecha||'')?1:-1);
+  const el=document.getElementById('f-movs');
+  if(!movs.length){el.innerHTML=`<div class="empty" style="padding:1rem">Sin movimientos en ${curr?'USD':'EUR'}</div>`;return;}
+  el.innerHTML=`<div class="mov-row">
+    <div class="mov-info"><div class="mov-name">Saldo inicial</div></div>
+    <div class="mov-amount pos">${fmtN(s,sym)}</div>
+  </div>`+movs.map(g=>{
+    const cat=CATS.find(c=>c.id===g.cat)||CATS[CATS.length-1];
+    return `<div class="mov-row">
+      <div class="mov-ico" style="background:${catBg[g.cat]||'#f0ede8'}">${cat.ico}</div>
+      <div class="mov-info"><div class="mov-name">${g.desc}</div><div class="mov-meta">${g.fecha?fmtD(g.fecha)+' · ':''}${cat.lbl}</div></div>
+      <div class="mov-amount neg">-${fmtN(g.monto,sym)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── GASTOS ──
+let selCat='comida';
+function buildCats(){
+  document.getElementById('cat-grid').innerHTML=CATS.map(c=>`
+    <button class="cat-btn${c.id===selCat?' sel':''}" onclick="setSel('${c.id}')">
+      <span class="cat-btn-ico">${c.ico}</span>
+      <span class="cat-btn-lbl">${c.lbl}</span>
+    </button>`).join('');
+}
+function setSel(id){selCat=id;buildCats();}
+function addGasto(){
+  const desc=document.getElementById('g-desc').value.trim();
+  const monto=parseFloat(document.getElementById('g-monto').value);
+  if(!desc||isNaN(monto)||monto<=0)return;
+  gastos.push({id:Date.now(),desc,monto,moneda:document.getElementById('g-moneda').value,cat:selCat,fecha:document.getElementById('g-fecha').value||today()});
+  save(K.g,gastos);
+  document.getElementById('g-desc').value='';
+  document.getElementById('g-monto').value='';
+  closeModal('m-gasto');
+  renderGastos();renderInicio();
+}
+function renderGastos(){
+  const card=document.getElementById('g-card'),empty=document.getElementById('g-empty');
+  const tU=gastos.filter(g=>g.moneda==='USD').reduce((s,x)=>s+x.monto,0);
+  const tE=gastos.filter(g=>g.moneda==='EUR').reduce((s,x)=>s+x.monto,0);
+  document.getElementById('g-usd').textContent=fmtN(tU,'$');
+  document.getElementById('g-eur').textContent=fmtN(tE,'€');
+  document.getElementById('g-cnt').textContent=gastos.length;
+  if(!gastos.length){card.style.display='none';empty.style.display='block';return;}
+  card.style.display='block';empty.style.display='none';
+  const sorted=[...gastos].sort((a,b)=>(b.fecha||'')>(a.fecha||'')?1:-1);
+  document.getElementById('g-list').innerHTML=sorted.map(g=>{
+    const cat=CATS.find(c=>c.id===g.cat)||CATS[CATS.length-1];
+    const sym=g.moneda==='USD'?'$':'€';
+    return `<div class="mov-row">
+      <div class="mov-ico" style="background:${catBg[g.cat]||'#f0ede8'}">${cat.ico}</div>
+      <div class="mov-info"><div class="mov-name">${g.desc}</div><div class="mov-meta">${fmtD(g.fecha)} · ${cat.lbl} · ${g.moneda}</div></div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="mov-amount neg">${fmtN(g.monto,sym)}</div>
+        <button class="del-btn" onclick="delG(${g.id})">×</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function delG(id){gastos=gastos.filter(x=>x.id!==id);save(K.g,gastos);renderGastos();renderInicio();}
+
+// ── PREVIOS ──
+function addPrevio(){
+  const desc=document.getElementById('p-desc').value.trim();
+  const monto=parseFloat(document.getElementById('p-monto').value);
+  if(!desc||isNaN(monto)||monto<=0)return;
+  previos.push({id:Date.now(),desc,monto,moneda:document.getElementById('p-moneda').value,cat:document.getElementById('p-cat').value,fecha:document.getElementById('p-fecha').value,quien:document.getElementById('p-quien').value.trim()});
+  save(K.p,previos);
+  ['p-desc','p-monto','p-fecha','p-quien'].forEach(id=>document.getElementById(id).value='');
+  closeModal('m-previo');renderPrevios();
+}
+function renderPrevios(){
+  const card=document.getElementById('p-card'),empty=document.getElementById('p-empty');
+  const tU=previos.filter(g=>g.moneda==='USD').reduce((s,x)=>s+x.monto,0);
+  const tE=previos.filter(g=>g.moneda==='EUR').reduce((s,x)=>s+x.monto,0);
+  document.getElementById('p-usd').textContent=fmtN(tU,'$');
+  document.getElementById('p-eur').textContent=fmtN(tE,'€');
+  if(!previos.length){card.style.display='none';empty.style.display='block';return;}
+  card.style.display='block';empty.style.display='none';
+  document.getElementById('p-list').innerHTML=previos.map(g=>{
+    const sym=g.moneda==='USD'?'$':'€';
+    const ico=catMapa[g.cat]||'📌';
+    const bg=catMapaBg[g.cat]||'#f0ede8';
+    return `<div class="mov-row">
+      <div class="mov-ico" style="background:${bg}">${ico}</div>
+      <div class="mov-info">
+        <div class="mov-name">${g.desc}${g.quien?` <span style="font-size:.6rem;color:var(--ink3)">· ${g.quien}</span>`:''}</div>
+        <div class="mov-meta">${g.fecha?fmtD(g.fecha):'Sin fecha'} · ${g.moneda}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div class="mov-amount neutral">${fmtN(g.monto,sym)}</div>
+        <button class="del-btn" onclick="delP(${g.id})">×</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function delP(id){previos=previos.filter(x=>x.id!==id);save(K.p,previos);renderPrevios();}
+
+// ── DOCS ──
+let pendingFile=null,docFilter='todos',docSearch='';
+function handleFile(input){
+  const file=input.files[0];
+  document.getElementById('file-warn').textContent='';
+  if(!file){pendingFile=null;document.getElementById('file-ok').textContent='';return;}
+  if(file.size>8*1024*1024){document.getElementById('file-warn').textContent=`Pesa ${(file.size/1024/1024).toFixed(1)}MB, máximo 8MB.`;pendingFile=null;input.value='';return;}
+  document.getElementById('file-ok').textContent='Leyendo…';
+  const r=new FileReader();
+  r.onload=e=>{pendingFile={name:file.name,type:file.type,data:e.target.result};document.getElementById('file-ok').textContent='✓ '+file.name;};
+  r.readAsDataURL(file);
+}
+const dz=document.getElementById('drop-zone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');const fi=document.getElementById('dd-archivo');const dt=new DataTransfer();dt.items.add(e.dataTransfer.files[0]);fi.files=dt.files;handleFile(fi);});
+function cancelDoc(){pendingFile=null;document.getElementById('file-ok').textContent='';document.getElementById('file-warn').textContent='';document.getElementById('dd-archivo').value='';closeModal('m-doc');}
+function addDoc(){
+  const nombre=document.getElementById('dd-nombre').value.trim();
+  if(!nombre)return;
+  docs.push({id:Date.now(),nombre,tipo:document.getElementById('dd-tipo').value,quien:document.getElementById('dd-quien').value.trim(),ref:document.getElementById('dd-ref').value.trim(),notas:document.getElementById('dd-notas').value.trim(),archivo:pendingFile||null});
+  try{save(K.d,docs);}catch(e){const s=docs.map(d=>({...d,archivo:d.archivo?{name:d.archivo.name,type:d.archivo.type,data:null}:null}));save(K.d,s);}
+  ['dd-nombre','dd-quien','dd-ref','dd-notas'].forEach(id=>document.getElementById(id).value='');
+  pendingFile=null;document.getElementById('file-ok').textContent='';document.getElementById('dd-archivo').value='';
+  cancelDoc();renderDocs();
+}
+function openPdf(id){
+  const d=docs.find(x=>x.id===id);
+  if(!d||!d.archivo||!d.archivo.data){alert('Archivo no disponible.');return;}
+  const body=document.getElementById('pdf-body');
+  document.getElementById('pdf-title').textContent=d.archivo.name;
+  body.innerHTML='';
+  if(d.archivo.type==='application/pdf'){
+    const blob=dataURLtoBlob(d.archivo.data);
+    const url=URL.createObjectURL(blob);
+    const iframe=document.createElement('iframe');
+    iframe.src=url;body.appendChild(iframe);
+  } else {
+    const img=document.createElement('img');
+    img.src=d.archivo.data;body.appendChild(img);
+  }
+  document.getElementById('pdf-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function dataURLtoBlob(dataURL){
+  const arr=dataURL.split(','),mime=arr[0].match(/:(.*?);/)[1];
+  const bstr=atob(arr[1]);let n=bstr.length;
+  const u8=new Uint8Array(n);while(n--)u8[n]=bstr.charCodeAt(n);
+  return new Blob([u8],{type:mime});
+}
+function closePdf(){document.getElementById('pdf-overlay').classList.remove('open');document.getElementById('pdf-body').innerHTML='';document.body.style.overflow='';}
+function downloadDoc(id){const d=docs.find(x=>x.id===id);if(!d||!d.archivo||!d.archivo.data)return;const a=document.createElement('a');a.href=d.archivo.data;a.download=d.archivo.name;a.click();}
+function setFilter(val,btn){docFilter=val;document.querySelectorAll('.fchip').forEach(c=>c.classList.toggle('on',c.dataset.f===val));renderDocs();}
+function filterDocs(){docSearch=document.getElementById('d-search').value.trim().toLowerCase();document.getElementById('d-clear').style.display=docSearch?'block':'none';renderDocs();}
+function clearSearch(){document.getElementById('d-search').value='';docSearch='';document.getElementById('d-clear').style.display='none';renderDocs();}
+function delDoc(id){docs=docs.filter(x=>x.id!==id);save(K.d,docs);renderDocs();}
+function renderDocs(){
+  const card=document.getElementById('d-card'),empty=document.getElementById('d-empty'),cnt=document.getElementById('d-count');
+  const filtered=docs.filter(d=>{
+    const mf=docFilter==='todos'?true:docFilter==='conarchivo'?(d.archivo&&d.archivo.name):d.tipo===docFilter;
+    const ms=!docSearch||(d.nombre+' '+d.quien+' '+d.ref+' '+d.notas).toLowerCase().includes(docSearch);
+    return mf&&ms;
+  });
+  cnt.textContent=docs.length===0?'':filtered.length===docs.length?docs.length+' documento'+(docs.length!==1?'s':''):filtered.length+' de '+docs.length+' documentos';
+  if(!docs.length){card.style.display='none';empty.style.display='block';empty.textContent='No hay documentos guardados.';return;}
+  if(!filtered.length){card.style.display='none';empty.style.display='block';empty.textContent='Ninguno coincide con la búsqueda.';return;}
+  card.style.display='block';empty.style.display='none';
+  function hl(t){if(!docSearch||!t)return t||'';const re=new RegExp('('+docSearch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return t.replace(re,'<mark style="background:var(--peach3);border-radius:2px;padding:0 1px">$1</mark>');}
+  document.getElementById('d-list').innerHTML=filtered.map(d=>{
+    const tA=d.archivo&&d.archivo.name,tD=d.archivo&&d.archivo.data;
+    const bA=tD?`<button class="doc-action primary" onclick="openPdf(${d.id})">${d.archivo.type==='application/pdf'?'Ver PDF':'Ver imagen'}</button>`:(tA?`<span style="font-size:.6rem;color:var(--ink3)">${d.archivo.name}</span>`:'');
+    const bD=tD?`<button class="doc-action" onclick="downloadDoc(${d.id})">Descargar</button>`:'';
+    return `<div class="doc-item">
+      <div class="doc-ico" style="background:${docBg[d.tipo]||'#f0ede8'}">${docIco[d.tipo]||'📌'}</div>
+      <div class="doc-info">
+        <div class="doc-name">${hl(d.nombre)}</div>
+        <div class="doc-meta">${d.quien?'👤 '+hl(d.quien):''}${d.ref?' · #'+hl(d.ref):''}${d.notas?' · '+hl(d.notas):''}</div>
+        ${tA?`<div class="doc-btns">${bA}${bD}</div>`:''}
+      </div>
+      <button class="del-btn" onclick="delDoc(${d.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+// ── ITINERARIO ──
+function renderItin(){
+  document.getElementById('itin-list').innerHTML=itin.map(d=>`
+    <div class="itin-day">
+      <div class="itin-date-hdr">
+        <div class="itin-badge">${d.f} · ${d.d}</div>
+        <div class="itin-line"></div>
+      </div>
+      <div class="itin-card">
+        <div class="itin-dot ${d.t}"></div>
+        <div class="itin-body">
+          <div class="itin-place">${d.l}</div>
+          <div class="itin-det">${d.det}</div>
+          ${d.q?`<div class="itin-quien">🎫 ${d.q}</div>`:''}
+        </div>
+        ${d.time?`<div class="itin-time">${d.time}</div>`:''}
+      </div>
+    </div>`).join('');
+}
+
+// ── INIT ──
+const su=load(K.su,null),se=load(K.se,null);
+if(su!==null)document.getElementById('f-usd').value=su;
+if(se!==null)document.getElementById('f-eur').value=se;
+document.getElementById('g-fecha').value=today();
+buildCats();
+renderInicio();
+renderItin();
+</script>
+</body>
+</html>
